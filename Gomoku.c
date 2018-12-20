@@ -21,7 +21,7 @@ int vertical(int row, int col, char whoFlag);
 int LeftObli(int row, int col, char whoFlag);   // Left oblique
 int RightObl(int row, int col, char whoFlag);   // Right oblique
 int result(int left, int right, int cnt, int k, char num);
-int Player_opp();   //Player opportunities
+int Player_opp();    //Player opportunities
 void PC_opp();   // Pc opportunities
 void Scorer();
 int win();
@@ -189,16 +189,16 @@ void draw_map() {
 	}
 }
 int horizontal(int row, int col, char whoFlag) {
-	int spaceNum = 0;//空白数
-	int cnt = 1;//几连，包含当前要下的子
-	int leftHad = 0;//左边是否有同子
+	int spaceNum = 0;
+	int cnt = 1;      // Are there several connected together? (Contains the pieces to be played.)
+	int leftHad = 0;  // Is there a chess piece on the left?
 	int x = row, y = col, liveLeft = 0, liveRight = 0;
 
 	if (map[row][col] != '+')
 		return 0;
 
 	while (y > 0 && (map[x][y - 1] == '+' || map[x][y - 1] == whoFlag)) {
-		if (map[x][y - 1] == '+' && spaceNum<1) {  //第一个空白
+		if (map[x][y - 1] == '+' && spaceNum<1) {       // First blank
 			if (map[x][y - 2] != whoFlag) {
 				liveLeft = 1;
 				break;
@@ -211,19 +211,18 @@ int horizontal(int row, int col, char whoFlag) {
 			y--;
 			cnt++;
 		}
-		else {  //第2个空白
+		else {                                          // Second blank
 			liveLeft = 1;
 			break;
 		}
 	}
-
-	//如果左边没有同色子，设置空白数为0
+	
 	if (!leftHad)
 		spaceNum = 0;
 
 	y = col;
 	while (y<14 && (map[x][y + 1] == '+' || map[x][y + 1] == whoFlag)) {
-		if (map[x][y + 1] == '+' && spaceNum < 1) {//第一个空白
+		if (map[x][y + 1] == '+' && spaceNum < 1) {     // First blank
 			if (map[x][y + 2] != whoFlag) {
 				liveRight = 1;
 				break;
@@ -231,7 +230,7 @@ int horizontal(int row, int col, char whoFlag) {
 			spaceNum++;
 			y++;
 		}
-		else if (map[x][y + 1] == '+' && spaceNum>0) {//第2个空白
+		else if (map[x][y + 1] == '+' && spaceNum>0) {  // Second blank
 			liveRight = 1;
 			break;
 		}
@@ -244,16 +243,16 @@ int horizontal(int row, int col, char whoFlag) {
 }
 
 int vertical(int row, int col, char whoFlag) {
-	int spaceNum = 0;//空白数
-	int cnt = 1;//几连，包含当前要下的子
-	int topHad = 0;//上边是否有同子
+	int spaceNum = 0;
+	int cnt = 1;       // Are there several connected together? (Contains the pieces to be played.)
+	int topHad = 0;    // Is there a chess piece on it?
 	int x = row,y = col, liveLeft = 0, liveRight = 0;
 
 	if (map[row][col] != '+')
 		return 0;
 
 	while (x > 0 && (map[x - 1][y] == '+' || map[x - 1][y] == whoFlag)) {
-		if (map[x - 1][y] == '+' && spaceNum < 1) {//第一个空白
+		if (map[x - 1][y] == '+' && spaceNum < 1) {    // First blank
 			if (map[x - 2][y] != whoFlag) {
 				liveLeft = 1;
 				break;
@@ -266,18 +265,17 @@ int vertical(int row, int col, char whoFlag) {
 			x--;
 			cnt++;
 		}
-		else {//第2个空白
+		else {                                         // Second blank
 			liveLeft = 1;
 			break;
 		}
 	}
-	//如果左边没有同色子，设置空白数为0
 	if (!topHad)
 		spaceNum = 0;
 
 	x = row;
 	while (x < 14 && (map[x + 1][y] == '+' || map[x + 1][y] == whoFlag)) {
-		if (map[x + 1][y] == '+' && spaceNum < 1) {//第一个空白
+		if (map[x + 1][y] == '+' && spaceNum < 1) {    // First blank
 			if (map[x + 2][y] != whoFlag) {
 				liveRight = 1;
 				break;
@@ -285,7 +283,7 @@ int vertical(int row, int col, char whoFlag) {
 			spaceNum++;
 			x++;
 		}
-		else if (map[x + 1][y] == '+' && spaceNum>0) {//第2个空白
+		else if (map[x + 1][y] == '+' && spaceNum>0) {  // Second blank
 			liveRight = 1;
 			break;
 		}
@@ -302,16 +300,16 @@ int vertical(int row, int col, char whoFlag) {
 // +-+-X-+-+
 // +-X-+-+-+
 int LeftObli(int row, int col, char whoFlag) {
-	int spaceNum = 0;//空白数
-	int count = 1;//几连，包含当前要下的子
-	int topHad = 0;//上边是否有同子
+	int spaceNum = 0;
+	int cnt = 1;     // Are there several connected together? (Contains the pieces to be played.)
+	int topHad = 0;  // Is there a chess piece on it?
 	int x = row, y = col, liveLeft = 0, liveRight = 0;
 
 	if (map[row][col] != '+')
 		return 0;
-	//向下
+	//   down
 	while (x<14 && y>0 && (map[x + 1][y - 1] == '+' || map[x + 1][y - 1] == whoFlag)) {
-		if (map[x + 1][y - 1] == '+' && spaceNum<1) {  //第一个空白
+		if (map[x + 1][y - 1] == '+' && spaceNum<1) {    // First blank
 			if (map[x + 2][y - 2] != whoFlag) {
 				liveLeft = 1;
 				break;
@@ -324,22 +322,21 @@ int LeftObli(int row, int col, char whoFlag) {
 			topHad = 1;
 			x++;
 			y--;
-			count++;
+			cnt++;
 		}
-		else {  //第2个空白
+		else {                                            // Second blank
 			liveLeft = 1;
 			break;
 		}
 	}
-	//如果上边没有同色子，设置空白数为0
 	if (!topHad)
 		spaceNum = 0;
 
 	x = row;
 	y = col;
-	//向上
+	//   up
 	while (x>0 && y<14 && (map[x - 1][y + 1] == '+' || map[x - 1][y + 1] == whoFlag)) {
-		if (map[x - 1][y + 1] == '+' && spaceNum<1) {  //第一个空白
+		if (map[x - 1][y + 1] == '+' && spaceNum<1) {      // First blank
 			if (map[x - 2][y + 2] != whoFlag) {
 				liveRight = 1;
 				break;
@@ -348,30 +345,30 @@ int LeftObli(int row, int col, char whoFlag) {
 			x--;
 			y++;
 		}
-		else if (map[x - 1][y + 1] == '+' && spaceNum>0) {   //第2个空白
+		else if (map[x - 1][y + 1] == '+' && spaceNum>0) {  // Second blank
 			liveRight = 1;
 			break;
 		}
 		else {
 			x--;
 			y++;
-			count++;
+			cnt++;
 		}
 	}
-	return result(liveLeft, liveRight, count, spaceNum, whoFlag);
+	return result(liveLeft, liveRight, cnt, spaceNum, whoFlag);
 }
 
 int RightObl(int row, int col, char whoFlag) {
-	int spaceNum = 0;//空白数
-	int cnt = 1;//几连，包含当前要下的子
-	int topHad = 0;//上边是否有同子
+	int spaceNum = 0;
+	int cnt = 1;     // Are there several connected together? (Contains the pieces to be played.)
+	int topHad = 0;  // Is there a chess piece on it?
 	int x = row, y = col, liveLeft = 0, liveRight = 0;
 
 	if (map[row][col] != '+')
 		return 0;
-	//向上
+	//   up
 	while (x>0 && y>0 && (map[x - 1][y - 1] == '+' || map[x - 1][y - 1] == whoFlag)) {
-		if (map[x - 1][y - 1] == '+' && spaceNum<1) {//第一个空白
+		if (map[x - 1][y - 1] == '+' && spaceNum<1) {       // First blank
 			if (map[x - 2][y - 2] != whoFlag) {
 				liveLeft = 1;
 				break;
@@ -386,21 +383,19 @@ int RightObl(int row, int col, char whoFlag) {
 			y--;
 			cnt++;
 		}
-		else {   //第2个空白
+		else {                                               // Second blank
 			liveLeft = 1;
 			break;
 		}
 	}
-
-	//如果上边没有同色子，设置空白数为0
 	if (!topHad)
 		spaceNum = 0;
 
 	x = row;
 	y = col;
-	//向下
+	//    down
 	while (x<14 && y<14 && (map[x + 1][y + 1] == '+' || map[x + 1][y + 1] == whoFlag)) {
-		if (map[x + 1][y + 1] == '+' && spaceNum<1) {//第一个空白
+		if (map[x + 1][y + 1] == '+' && spaceNum<1) {        // First blank
 			if (map[x + 2][y + 2] != whoFlag) {
 				liveRight = 1;
 				break;
@@ -409,7 +404,7 @@ int RightObl(int row, int col, char whoFlag) {
 			x++;
 			y++;
 		}
-		else if (map[x + 1][y + 1] == '+' && spaceNum>0) {//第2个空白
+		else if (map[x + 1][y + 1] == '+' && spaceNum>0) {   // Second blank
 			liveRight = 1;
 			break;
 		}
@@ -427,10 +422,10 @@ int result(int left, int right, int cnt, int k, char num) {
 	if (cnt == 1)
 		return 1;
 	else if (cnt == 2) {
-		if (left && right) {   //左右两边都是空的
+		if (left && right) {   // Both left and right are empty
 			if (k == 0)
 				if (num == BLACK_FLAG)
-					return 60;       //电脑60
+					return 60;       // PC 60 points
 				else
 					return 50;
 			else
@@ -446,7 +441,7 @@ int result(int left, int right, int cnt, int k, char num) {
 	}
 	else if (cnt == 3) {
 
-		if (left && right) {  //左右两边都是空的
+		if (left && right) {   // Both left and right are empty
 			if (k == 0)
 				if (num == BLACK_FLAG)
 					return 950;
@@ -464,7 +459,7 @@ int result(int left, int right, int cnt, int k, char num) {
 			return 100;
 	}
 	else if (cnt == 4) {
-		if (left && right) {  //左右两边都是空的
+		if (left && right) {   // Both left and right are empty
 			if (k == 0)
 				if (num == BLACK_FLAG)
 					return 6000;
