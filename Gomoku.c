@@ -203,6 +203,7 @@ void draw_map() {
 	}
 }
 int horizontal(int row, int col, char whoFlag) {
+	// Horizontal situation of placing chess pieces
 	int spaceNum = 0;
 	int cnt = 1;      // Are there several connected together? (Contains the pieces to be played.)
 	int leftHad = 0;  // Is there a chess piece on the left?
@@ -257,6 +258,7 @@ int horizontal(int row, int col, char whoFlag) {
 }
 
 int vertical(int row, int col, char whoFlag) {
+	// Vertical placement of chess pieces
 	int spaceNum = 0;
 	int cnt = 1;       // Are there several connected together? (Contains the pieces to be played.)
 	int topHad = 0;    // Is there a chess piece on it?
@@ -314,6 +316,7 @@ int vertical(int row, int col, char whoFlag) {
 // +-+-X-+-+
 // +-X-+-+-+
 int LeftObli(int row, int col, char whoFlag) {
+	// Left oblique placed diagonally in the situation
 	int spaceNum = 0;
 	int cnt = 1;     // Are there several connected together? (Contains the pieces to be played.)
 	int topHad = 0;  // Is there a chess piece on it?
@@ -373,6 +376,7 @@ int LeftObli(int row, int col, char whoFlag) {
 }
 
 int RightObl(int row, int col, char whoFlag) {
+	// Right oblique placed diagonally in the situation
 	int spaceNum = 0;
 	int cnt = 1;     // Are there several connected together? (Contains the pieces to be played.)
 	int topHad = 0;  // Is there a chess piece on it?
