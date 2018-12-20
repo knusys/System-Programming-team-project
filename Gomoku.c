@@ -34,6 +34,7 @@ int main() {
 	int mode = 0, result, nums;
 
 	do {
+		//   User Interface
 		printf("-------------------------------------\n");
 		printf("+                                   +\n");
 		printf("+    ( White is O, Black is X. )    +\n");
@@ -59,15 +60,17 @@ int main() {
 		if (mode != 3)
 			draw_map();
 
-		if (mode == 1) {
+		if (mode == 1) {        // People and people fight
 			for (nums = 0; nums < 225; nums++) {
 				if (player == BLACK) {
+					// Player1 put the pieces
 					printf("Please White(%c) play.\n", WHITE_FLAG);
 					player = WHITE;
 					result = Player_opp();
 					if (!result) break;
 				}
 				else {
+					// PLayer2 put the pieces
 					printf("Please Black(%c) play.\n", BLACK_FLAG);
 					player = BLACK;
 					result = Player_opp();
@@ -76,6 +79,7 @@ int main() {
 				system("clear");
 				draw_map();
 				if (win()) {
+					// Is there a person who wins?
 					if (player == WHITE)
 						printf("\n       White(%c) is the winner.\n", WHITE_FLAG);
 					else
@@ -85,20 +89,23 @@ int main() {
 			}
 		}
 
-		else if (mode == 2) {
+		else if (mode == 2) {    // People and PC fight
 			for (nums = 0; nums < 225; nums++) {
 				if (player == BLACK) {
+					// Player1 put the pieces
 					printf("Please player(%c) play\n", WHITE_FLAG);
 					player = WHITE;
 					result = Player_opp();
 					if (!result) break;
 				}
 				else {
+					// PC put the pieces
 					player = BLACK;
 					PC_opp();
 				}
 				draw_map();
 				if (win()) {
+					// Is there who wins?
 					if (player == WHITE) {
 						printf("\n       Player(%c) is the winner.\n", WHITE_FLAG);
 					}
@@ -109,11 +116,12 @@ int main() {
 				}
 			}
 		}
-	} while (mode != 3);
+	} while (mode != 3);   // exit
 	return 0;
 }
 
 void init_map() {
+	// make map
 	int i, j = 0;
 
 	for (i = 0; i < HEIGHT; i++)
@@ -122,6 +130,7 @@ void init_map() {
 }
 
 void draw_pc_map() {
+	// make map with pc's pieces
 	int i, j, k;
 
 	for (i = 0; i < WIDTH; i++) {
@@ -135,6 +144,7 @@ void draw_pc_map() {
 }
 
 void draw_player_map() {
+	// make map with player's pieces
 	int i = 0, j = 0;
 
 	for (i = 0; i < WIDTH; i++) {
@@ -149,6 +159,7 @@ void draw_player_map() {
 
 
 void draw_map() {
+	// draw map
 	int i = 0, j = 0, k = 0;
 
 	printf("    X axis----------------------->\n");
@@ -421,7 +432,8 @@ int RightObl(int row, int col, char whoFlag) {
 }
 
 int result(int left, int right, int cnt, int k, char num) {
-
+	// Calculating score ( Score in the algorithm )
+	
 	if (cnt == 1)
 		return 1;
 	else if (cnt == 2) {
@@ -462,7 +474,7 @@ int result(int left, int right, int cnt, int k, char num) {
 			return 100;
 	}
 	else if (cnt == 4) {
-		if (left && right) {   // Both left and right are empty
+		if (left && right) {    // Both left and right are empty
 			if (k == 0)
 				if (num == BLACK_FLAG)
 					return 6000;
@@ -474,7 +486,7 @@ int result(int left, int right, int cnt, int k, char num) {
 				else
 					return 3000;
 		}
-		else if (!left && !right)
+		else if (!left && !right)   // Both left and right are not empty
 			return 1;
 		else {
 			if (k == 0)
@@ -504,12 +516,15 @@ int result(int left, int right, int cnt, int k, char num) {
 }
 
 int Player_opp() {
-
+	// Player put the pieces
+	
 	int x, y, res;
 
+	// input coordinate
 	printf("Please input numeric coordinates(x y):");
 	scanf("%d %d", &y, &x);
 
+	// If the number entered is no longer in range, there will be warning words.
 	if (x > HEIGHT || y > WIDTH || x < 0 || y < 0) {
 		printf("Input error,please enter numeric coordinates again.\n");
 		while ((getchar()) != '\n');
@@ -526,6 +541,7 @@ int Player_opp() {
 		else if (player == BLACK)
 			map[x][y] = BLACK_FLAG;
 	}
+	// If there is already a piece in the place to be placed， there will be warning words.
 	else {
 		printf("Already have a chess,please enter again.\n");
 		while ((getchar()) != '\n');
@@ -537,6 +553,7 @@ int Player_opp() {
 }
 
 void PC_opp() {
+	// PC put the pieces
 
 	int cnt = 0, row = 0, col = 0, i = 0, j = 0;
 
@@ -544,6 +561,7 @@ void PC_opp() {
 
 	for (i = 0; i< 15; i++) {
 		for (j = 0; j< 15; j++) {
+			// Compare scores in the algorithm, then decide where to put it.
 			if (PC_map[i][j] > cnt) {
 				cnt = PC_map[i][j];
 				row = i;
@@ -560,18 +578,19 @@ void PC_opp() {
 	system("clear");
 	printf("\n        PC is put on [%d][%d]\n\n", col + 1, row + 1);
 
-	if (map[row][col] == '+')  map[row][col] = BLACK_FLAG;
+	// Put the pieces
+	if (map[row][col] == '+')
+		map[row][col] = BLACK_FLAG;
 }
 
 void Scorer() {
 
 	int x = 0, y = 0;
+	// Add the scores in the algorithm together
 	for (x = 0; x < 15; x++) {
 		for (y = 0; y < 15; y++) {
 			PC_map[x][y] = horizontal(x, y, BLACK_FLAG) + vertical(x, y, BLACK_FLAG) + LeftObli(x, y, BLACK_FLAG) + RightObl(x, y, BLACK_FLAG);
-			//
 			Player_map[x][y] = horizontal(x, y, WHITE_FLAG) + vertical(x, y, WHITE_FLAG) + LeftObli(x, y, WHITE_FLAG) + RightObl(x, y, WHITE_FLAG);
-			//
 		}
 	}
 }
