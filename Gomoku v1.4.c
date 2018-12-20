@@ -148,7 +148,7 @@ void draw_player_map() {
 void draw_map() {
 	int i = 0, j = 0, k = 0;
 
-	printf("    X----------------------------\n");
+	printf("    X axis----------------------->\n");
 	printf("    ");
 	for (k = 0; k < HEIGHT; k++) {
 		if (k >= 0 && k <= 8)
@@ -177,15 +177,12 @@ int horizontal(int row, int col, char whoFlag) {
 	int spaceNum = 0;//空白数
 	int count = 1;//几连，包含当前要下的子
 	int leftHad = 0;//左边是否有同子
-	int x = row;
-	int y = col;
-	int liveLeft = 0;
-	int liveRight = 0;
+	int x = row, y = col, liveLeft = 0, liveRight = 0;
 
 	if (map[row][col] != '+')
 		return 0;
 
-	while (y>0 && (map[x][y - 1] == '+' || map[x][y - 1] == whoFlag)) {
+	while (y > 0 && (map[x][y - 1] == '+' || map[x][y - 1] == whoFlag)) {
 		if (map[x][y - 1] == '+' && spaceNum<1) {  //第一个空白
 			if (map[x][y - 2] != whoFlag) {
 				liveLeft = 1;
@@ -211,7 +208,7 @@ int horizontal(int row, int col, char whoFlag) {
 
 	y = col;
 	while (y<14 && (map[x][y + 1] == '+' || map[x][y + 1] == whoFlag)) {
-		if (map[x][y + 1] == '+' && spaceNum<1) {//第一个空白
+		if (map[x][y + 1] == '+' && spaceNum < 1) {//第一个空白
 			if (map[x][y + 2] != whoFlag) {
 				liveRight = 1;
 				break;
@@ -235,16 +232,13 @@ int vertical(int row, int col, char whoFlag) {
 	int spaceNum = 0;//空白数
 	int count = 1;//几连，包含当前要下的子
 	int topHad = 0;//上边是否有同子
-	int x = row;
-	int y = col;
-	int liveLeft = 0;
-	int liveRight = 0;
+	int x = row,  = col, liveLeft = 0, liveRight = 0;
 
 	if (map[row][col] != '+')
 		return 0;
 
 	while (x > 0 && (map[x - 1][y] == '+' || map[x - 1][y] == whoFlag)) {
-		if (map[x - 1][y] == '+' && spaceNum<1) {//第一个空白
+		if (map[x - 1][y] == '+' && spaceNum < 1) {//第一个空白
 			if (map[x - 2][y] != whoFlag) {
 				liveLeft = 1;
 				break;
@@ -267,8 +261,8 @@ int vertical(int row, int col, char whoFlag) {
 		spaceNum = 0;
 
 	x = row;
-	while (x<14 && (map[x + 1][y] == '+' || map[x + 1][y] == whoFlag)) {
-		if (map[x + 1][y] == '+' && spaceNum<1) {//第一个空白
+	while (x < 14 && (map[x + 1][y] == '+' || map[x + 1][y] == whoFlag)) {
+		if (map[x + 1][y] == '+' && spaceNum < 1) {//第一个空白
 			if (map[x + 2][y] != whoFlag) {
 				liveRight = 1;
 				break;
@@ -296,10 +290,7 @@ int LeftObli(int row, int col, char whoFlag) {
 	int spaceNum = 0;//空白数
 	int count = 1;//几连，包含当前要下的子
 	int topHad = 0;//上边是否有同子
-	int x = row;
-	int y = col;
-	int liveLeft = 0;
-	int liveRight = 0;
+	int x = row, y = col, liveLeft = 0, liveRight = 0;
 
 	if (map[row][col] != '+')
 		return 0;
@@ -359,10 +350,7 @@ int RightObl(int row, int col, char whoFlag) {
 	int spaceNum = 0;//空白数
 	int count = 1;//几连，包含当前要下的子
 	int topHad = 0;//上边是否有同子
-	int x = row;
-	int y = col;
-	int liveLeft = 0;
-	int liveRight = 0;
+	int x = row, y = col, liveLeft = 0, liveRight = 0;
 
 	if (map[row][col] != '+')
 		return 0;
@@ -383,7 +371,7 @@ int RightObl(int row, int col, char whoFlag) {
 			y--;
 			count++;
 		}
-		else {//第2个空白
+		else {   //第2个空白
 			liveLeft = 1;
 			break;
 		}
@@ -426,9 +414,15 @@ int result(int left, int right, int cnt, int k, char num) {
 	else if (cnt == 2) {
 		if (left && right) {   //左右两边都是空的
 			if (k == 0)
-				return num == BLACK_FLAG ? 60 : 50;    //电脑60
+				if(num == BLACK_FLAG)
+					return 60;       //电脑60
+			        else
+				        return 50;
 			else
-				return num == BLACK_FLAG ? 40 : 35;
+				if(num == BLACK_FLAG)
+					return 40;
+			        else
+				        return 35;
 		}
 		else if (!left && !right)
 			return 1;
@@ -437,11 +431,17 @@ int result(int left, int right, int cnt, int k, char num) {
 	}
 	else if (cnt == 3) {
 
-		if (left && right) {//左右两边都是空的
+		if (left && right) {  //左右两边都是空的
 			if (k == 0)
-				return num == BLACK_FLAG ? 950 : 700;  //电脑950
+				if(num == BLACK_FLAG)
+					return 950;
+			        else
+				        return 700;
 			else
-				return num == BLACK_FLAG ? 900 : 650;
+				if(num == BLACK_FLAG)
+					return 900;
+			        else
+				        return 650;;
 		}
 		else if (!left && !right)
 			return 1;
@@ -449,26 +449,44 @@ int result(int left, int right, int cnt, int k, char num) {
 			return 100;
 	}
 	else if (cnt == 4) {
-		if (left && right) {//左右两边都是空的
+		if (left && right) {  //左右两边都是空的
 			if (k == 0)
-				return num == BLACK_FLAG ? 6000 : 3500;
+				if(num == BLACK_FLAG)
+					return 6000;
+			        else
+				        return 3500;
 			else
-				return num == BLACK_FLAG ? 5000 : 3000;
+				if(num == BLACK_FLAG)
+					return 5000;
+			        else
+				        return 3000;
 		}
 		else if (!left && !right)
 			return 1;
 		else {
 			if (k == 0)
-				return num == BLACK_FLAG ? 4000 : 800;
+				if(num == BLACK_FLAG)
+					return 4000;
+			        else
+				        return 800;
 			else
-				return num == BLACK_FLAG ? 3600 : 750;
+				if(num == BLACK_FLAG)
+					return 3600;
+			        else
+				        return 750;
 		}
 	}
 	else {
 		if (k == 0)
-			return num == BLACK_FLAG ? 20000 : 15000;
+			if(num == BLACK_FLAG)
+					return 20000;
+			        else
+				        return 15000;
 		else
-			return num == BLACK_FLAG ? 10000 : 3300;
+			if(num == BLACK_FLAG)
+					return 10000;
+			        else
+				        return 3300;
 	}
 }
 
@@ -479,11 +497,12 @@ int Player_opp() {
 	printf("Please input numeric coordinates(x y):");
 	scanf("%d %d", &y, &x);
 
-	if (x < 0 || y < 0 || x > HEIGHT || y > WIDTH) {
+	if (x > HEIGHT || y > WIDTH || x < 0 || y < 0) {
 		printf("Input error,please enter numeric coordinates again.\n");
 		while ((getchar()) != '\n');
 		res = Player_opp();
-		if (res == 1) return 1;
+		if (res == 1)
+			return 1;
 	}
 	x--;
 	y--;
@@ -498,7 +517,8 @@ int Player_opp() {
 		printf("Already have a chess,please enter again.\n");
 		while ((getchar()) != '\n');
 		Player_opp();
-		if (res == 1) return 1;
+		if (res == 1)
+			return 1;
 	}
 	return 1;
 }
@@ -536,33 +556,39 @@ void Scorer() {
 	for (x = 0; x < 15; x++) {
 		for (y = 0; y < 15; y++) {
 			PC_map[x][y] = horizontal(x, y, BLACK_FLAG) + vertical(x, y, BLACK_FLAG) + LeftObli(x, y, BLACK_FLAG) + RightObl(x, y, BLACK_FLAG);
+			//
 			Player_map[x][y] = horizontal(x, y, WHITE_FLAG) + vertical(x, y, WHITE_FLAG) + LeftObli(x, y, WHITE_FLAG) + RightObl(x, y, WHITE_FLAG);
+			//
 		}
 	}
 }
 
 int win() {
-	char m;
+	char cp;   //chess piece
 	int i, j;
 
 	if (player == WHITE)
-		m = WHITE_FLAG;
-	else m = BLACK_FLAG;
+		cp = WHITE_FLAG;
+	else cp = BLACK_FLAG;
 
 	for (i = 0; i < HEIGHT; i++) {
 		for (j = 0; j < WIDTH; j++) {
 			if (map[i][j] == m) {
 				if ((i + 4) < HEIGHT)
 					if (map[i + 1][j] == m && map[i + 2][j] == m && map[i + 3][j] == m && map[i + 4][j] == m)
+					// Are there five chess pieces attached to the horizontal line?
 						return 1;
 				if ((j + 4) < WIDTH)
 					if (map[i][j + 1] == m && map[i][j + 2] == m && map[i][j + 3] == m && map[i][j + 4] == m)
+					// Are there five chess pieces attached to the vertical line?
 						return 1;
 				if ((i + 4) < HEIGHT && (j + 4) < WIDTH)
 					if (map[i + 1][j + 1] == m && map[i + 2][j + 2] == m && map[i + 3][j + 3] == m && map[i + 4][j + 4] == m)
+					// Are there five chess pieces attached to the left oblique line?
 						return 1;
 				if ((i + 4) < HEIGHT && (j - 4) >= 0)
 					if (map[i + 1][j - 1] == m && map[i + 2][j - 2] == m && map[i + 3][j - 3] == m && map[i + 4][j - 4] == m)
+					// Are there five chess pieces attached to the right oblique line?
 						return 1;
 			}
 		}
