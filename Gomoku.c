@@ -159,7 +159,12 @@ void draw_map() {
 	putchar('\n');
 
 	for (i = 0; i < WIDTH; i++) {
-		printf("Y");
+		if(i == 0)
+			printf("Y");
+		else if(i == WIDTH - 1)
+			printf("V");
+		else printf("|");
+			
 		if (i >= 0 && i <= 8)
 			printf("0%d ", i + 1);
 		else
