@@ -161,12 +161,22 @@ void draw_map() {
 	for (i = 0; i < WIDTH; i++) {
 		if(i == 0)
 			printf("Y");
+		else if (i == 1)
+			printf(" ");
+		else if (i == 2)
+			printf("a");
+		else if (i == 3)
+			printf("x");
+		else if (i == 4)
+			printf("i");
+		else if (i == 5)
+			printf("s");
 		else if(i == WIDTH - 1)
 			printf("V");
 		else printf("|");
 			
 		if (i >= 0 && i <= 8)
-			printf("0%d ", i + 1);
+			printf(" %d ", i + 1);
 		else
 			printf("%d ", i + 1);
 
