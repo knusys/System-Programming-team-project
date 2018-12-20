@@ -64,7 +64,7 @@ int main() {
 					result = Player_opp();
 					if (!result) break;
 				}
-				else {       
+				else {
 					printf("Please Black(%c) play.\n", BLACK_FLAG);
 					player = BLACK;
 					result = Player_opp();
@@ -175,7 +175,7 @@ void draw_map() {
 }
 int horizontal(int row, int col, char whoFlag) {
 	int spaceNum = 0;//空白数
-	int count = 1;//几连，包含当前要下的子
+	int cnt = 1;//几连，包含当前要下的子
 	int leftHad = 0;//左边是否有同子
 	int x = row, y = col, liveLeft = 0, liveRight = 0;
 
@@ -194,7 +194,7 @@ int horizontal(int row, int col, char whoFlag) {
 		else if (map[x][y - 1] == whoFlag) {
 			leftHad = 1;
 			y--;
-			count++;
+			cnt++;
 		}
 		else {  //第2个空白
 			liveLeft = 1;
@@ -222,17 +222,17 @@ int horizontal(int row, int col, char whoFlag) {
 		}
 		else {
 			y++;
-			count++;
+			cnt++;
 		}
 	}
-	return result(liveLeft, liveRight, count, spaceNum, whoFlag);
+	return result(liveLeft, liveRight, cnt, spaceNum, whoFlag);
 }
 
 int vertical(int row, int col, char whoFlag) {
 	int spaceNum = 0;//空白数
-	int count = 1;//几连，包含当前要下的子
+	int cnt = 1;//几连，包含当前要下的子
 	int topHad = 0;//上边是否有同子
-	int x = row,  = col, liveLeft = 0, liveRight = 0;
+	int x = row,y = col, liveLeft = 0, liveRight = 0;
 
 	if (map[row][col] != '+')
 		return 0;
@@ -249,7 +249,7 @@ int vertical(int row, int col, char whoFlag) {
 		else if (map[x - 1][y] == whoFlag) {
 			topHad = 1;
 			x--;
-			count++;
+			cnt++;
 		}
 		else {//第2个空白
 			liveLeft = 1;
@@ -276,10 +276,10 @@ int vertical(int row, int col, char whoFlag) {
 		}
 		else {
 			x++;
-			count++;
+			cnt++;
 		}
 	}
-	return result(liveLeft, liveRight, count, spaceNum, whoFlag);
+	return result(liveLeft, liveRight, cnt, spaceNum, whoFlag);
 }
 
 
@@ -348,7 +348,7 @@ int LeftObli(int row, int col, char whoFlag) {
 
 int RightObl(int row, int col, char whoFlag) {
 	int spaceNum = 0;//空白数
-	int count = 1;//几连，包含当前要下的子
+	int cnt = 1;//几连，包含当前要下的子
 	int topHad = 0;//上边是否有同子
 	int x = row, y = col, liveLeft = 0, liveRight = 0;
 
@@ -369,7 +369,7 @@ int RightObl(int row, int col, char whoFlag) {
 			topHad = 1;
 			x--;
 			y--;
-			count++;
+			cnt++;
 		}
 		else {   //第2个空白
 			liveLeft = 1;
@@ -401,10 +401,10 @@ int RightObl(int row, int col, char whoFlag) {
 		else {
 			x++;
 			y++;
-			count++;
+			cnt++;
 		}
 	}
-	return result(liveLeft, liveRight, count, spaceNum, whoFlag);
+	return result(liveLeft, liveRight, cnt, spaceNum, whoFlag);
 }
 
 int result(int left, int right, int cnt, int k, char num) {
@@ -414,15 +414,15 @@ int result(int left, int right, int cnt, int k, char num) {
 	else if (cnt == 2) {
 		if (left && right) {   //左右两边都是空的
 			if (k == 0)
-				if(num == BLACK_FLAG)
+				if (num == BLACK_FLAG)
 					return 60;       //电脑60
-			        else
-				        return 50;
+				else
+					return 50;
 			else
-				if(num == BLACK_FLAG)
+				if (num == BLACK_FLAG)
 					return 40;
-			        else
-				        return 35;
+				else
+					return 35;
 		}
 		else if (!left && !right)
 			return 1;
@@ -433,15 +433,15 @@ int result(int left, int right, int cnt, int k, char num) {
 
 		if (left && right) {  //左右两边都是空的
 			if (k == 0)
-				if(num == BLACK_FLAG)
+				if (num == BLACK_FLAG)
 					return 950;
-			        else
-				        return 700;
+				else
+					return 700;
 			else
-				if(num == BLACK_FLAG)
+				if (num == BLACK_FLAG)
 					return 900;
-			        else
-				        return 650;;
+				else
+					return 650;;
 		}
 		else if (!left && !right)
 			return 1;
@@ -451,42 +451,42 @@ int result(int left, int right, int cnt, int k, char num) {
 	else if (cnt == 4) {
 		if (left && right) {  //左右两边都是空的
 			if (k == 0)
-				if(num == BLACK_FLAG)
+				if (num == BLACK_FLAG)
 					return 6000;
-			        else
-				        return 3500;
+				else
+					return 3500;
 			else
-				if(num == BLACK_FLAG)
+				if (num == BLACK_FLAG)
 					return 5000;
-			        else
-				        return 3000;
+				else
+					return 3000;
 		}
 		else if (!left && !right)
 			return 1;
 		else {
 			if (k == 0)
-				if(num == BLACK_FLAG)
+				if (num == BLACK_FLAG)
 					return 4000;
-			        else
-				        return 800;
+				else
+					return 800;
 			else
-				if(num == BLACK_FLAG)
+				if (num == BLACK_FLAG)
 					return 3600;
-			        else
-				        return 750;
+				else
+					return 750;
 		}
 	}
 	else {
 		if (k == 0)
-			if(num == BLACK_FLAG)
-					return 20000;
-			        else
-				        return 15000;
+			if (num == BLACK_FLAG)
+				return 20000;
+			else
+				return 15000;
 		else
-			if(num == BLACK_FLAG)
-					return 10000;
-			        else
-				        return 3300;
+			if (num == BLACK_FLAG)
+				return 10000;
+			else
+				return 3300;
 	}
 }
 
@@ -525,19 +525,19 @@ int Player_opp() {
 
 void PC_opp() {
 
-	int count = 0, row = 0, col = 0, i = 0, j = 0;
+	int cnt = 0, row = 0, col = 0, i = 0, j = 0;
 
 	Scorer();
 
 	for (i = 0; i< 15; i++) {
 		for (j = 0; j< 15; j++) {
-			if (PC_map[i][j] > count) {
-				count = PC_map[i][j];
+			if (PC_map[i][j] > cnt) {
+				cnt = PC_map[i][j];
 				row = i;
 				col = j;
 			}
-			if (Player_map[i][j] > count) {
-				count = Player_map[i][j];
+			if (Player_map[i][j] > cnt) {
+				cnt = Player_map[i][j];
 				row = i;
 				col = j;
 			}
@@ -573,22 +573,22 @@ int win() {
 
 	for (i = 0; i < HEIGHT; i++) {
 		for (j = 0; j < WIDTH; j++) {
-			if (map[i][j] == m) {
+			if (map[i][j] == cp) {
 				if ((i + 4) < HEIGHT)
-					if (map[i + 1][j] == m && map[i + 2][j] == m && map[i + 3][j] == m && map[i + 4][j] == m)
-					// Are there five chess pieces attached to the horizontal line?
+					if (map[i + 1][j] == cp && map[i + 2][j] == cp && map[i + 3][j] == cp && map[i + 4][j] == cp)
+						// Are there five chess pieces attached to the horizontal line?
 						return 1;
 				if ((j + 4) < WIDTH)
-					if (map[i][j + 1] == m && map[i][j + 2] == m && map[i][j + 3] == m && map[i][j + 4] == m)
-					// Are there five chess pieces attached to the vertical line?
+					if (map[i][j + 1] == cp && map[i][j + 2] == cp && map[i][j + 3] == cp && map[i][j + 4] == cp)
+						// Are there five chess pieces attached to the vertical line?
 						return 1;
 				if ((i + 4) < HEIGHT && (j + 4) < WIDTH)
-					if (map[i + 1][j + 1] == m && map[i + 2][j + 2] == m && map[i + 3][j + 3] == m && map[i + 4][j + 4] == m)
-					// Are there five chess pieces attached to the left oblique line?
+					if (map[i + 1][j + 1] == cp && map[i + 2][j + 2] == cp && map[i + 3][j + 3] == cp && map[i + 4][j + 4] == cp)
+						// Are there five chess pieces attached to the left oblique line?
 						return 1;
 				if ((i + 4) < HEIGHT && (j - 4) >= 0)
-					if (map[i + 1][j - 1] == m && map[i + 2][j - 2] == m && map[i + 3][j - 3] == m && map[i + 4][j - 4] == m)
-					// Are there five chess pieces attached to the right oblique line?
+					if (map[i + 1][j - 1] == cp && map[i + 2][j - 2] == cp && map[i + 3][j - 3] == cp && map[i + 4][j - 4] == cp)
+						// Are there five chess pieces attached to the right oblique line?
 						return 1;
 			}
 		}
