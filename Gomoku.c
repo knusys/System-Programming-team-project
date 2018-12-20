@@ -1,3 +1,6 @@
+// author:
+// External source code source：
+//   https://blog.csdn.net/hello_simon/article/details/49615735
 #include <stdio.h>
 #include <stdlib.h>
 #define WIDTH 15
